@@ -1,11 +1,17 @@
 #include <iostream>
+
 using namespace std;
 
 bool isWon(char, char[][3]);
+
 bool isDraw(char[][3]);
+
 void displayBoard(char[][3]);
+
 void makeAMove(char[][3], char);
 
+
+//@formatter:off
 int main() {
 	//
 	//	PLEASE DO NOT CHANGE function main
@@ -43,4 +49,5 @@ int main() {
 	}
 
 	return 0;
-} 
+}
+//@formatter:on
