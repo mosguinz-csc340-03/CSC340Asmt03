@@ -7,7 +7,7 @@ include_directories(src)
 
 add_executable(
         CSC340Asmt03
-        src/Assignment-03_PA_TicTacToe.cpp
+        #                src/Assignment-03_PA_TicTacToe.cpp
         src/Assignment-03_PB_CCNumberValidation.cpp
-        src/Assignment-03_PC_Dictionary.cpp
+        #        src/Assignment-03_PC_Dictionary.cpp
 )
