@@ -1,4 +1,5 @@
 #include <iostream>
+#include <array>
 
 using namespace std;
 
@@ -51,3 +52,23 @@ int main() {
 	return 0;
 }
 //@formatter:on
+
+bool isWon(char team, char board[][3]) {
+    return true;
+}
+
+bool isDraw(char board[][3]) {
+    return true;
+}
+
+void displayBoard(char board[][3]) {
+    std::cout << "-------------\n";
+    for (int row = 0; row < 3; ++row) {
+        std::printf("| %c | %c | %c |\n-------------\n",
+                    board[row][0], board[row][1], board[row][2]);
+    }
+}
+
+void makeAMove(char board[][3], char team) {
+
+}
