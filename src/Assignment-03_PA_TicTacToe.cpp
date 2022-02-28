@@ -94,7 +94,7 @@ bool isDraw(char board[][3]) {
 }
 
 void displayBoard(char board[][3]) {
-    std::cout << "-------------\n";
+    std::cout << "\n-------------\n";
     for (int row = 0; row < 3; ++row) {
         std::printf("| %c | %c | %c |\n-------------\n",
                     board[row][0], board[row][1], board[row][2]);
