@@ -55,10 +55,41 @@ int main() {
 //@formatter:on
 
 bool isWon(char team, char board[][3]) {
-    return true;
+    for (int i = 0; i < 3; ++i) {
+        // Vertical
+        if (board[i][0] == team &&
+            board[i][1] == team &&
+            board[i][2] == team) {
+            return true;
+        }
+        // Horizontal
+        if (board[0][i] == team &&
+            board[1][i] == team &&
+            board[2][i] == team) {
+            return true;
+        }
+    }
+
+    // Diagonal
+    if (board[0][0] == team &&
+        board[1][1] == team &&
+        board[2][2] == team) {
+        return true;
+    }
+    if (board[0][2] == team &&
+        board[1][1] == team &&
+        board[2][0] == team) {
+        return true;
+    }
+    return false;
 }
 
 bool isDraw(char board[][3]) {
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            if (board[i][j] == ' ') { return false; }
+        }
+    }
     return true;
 }
 
