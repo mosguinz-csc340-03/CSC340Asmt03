@@ -1,5 +1,6 @@
 #include <iostream>
 #include <array>
+#include <iomanip>
 
 using namespace std;
 
@@ -69,6 +70,33 @@ void displayBoard(char board[][3]) {
     }
 }
 
-void makeAMove(char board[][3], char team) {
+int promptMove(char team, std::string const &location) {
+    while (true) {
+        std::cout << setw(37) << std::left
+                  << (std::string("Enter a ") + location + " (0, 1, 2) for player " + team) << ": ";
 
+        int value;
+        std::cin >> value;
+
+        if (value < 0 || value > 2) {
+            std::cout << "Invalid move\n";
+            continue;
+        }
+
+        return value;
+    }
+}
+
+void makeAMove(char board[][3], char team) {
+    while (true) {
+        int row = promptMove(team, "row");
+        int col = promptMove(team, "column");
+
+        if (board[row][col] == ' ') {
+            board[row][col] = team;
+            return;
+        }
+
+        std::cout << "This cell is already occupied. Try a different cell\n";
+    }
 }
