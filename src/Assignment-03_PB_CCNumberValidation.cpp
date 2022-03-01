@@ -38,13 +38,13 @@ int main()
 //@formatter:on
 
 bool isvalidcc(string const &card) {
-    int oddSum = 0, evenSum = 0;
+    unsigned int oddSum = 0, evenSum = 0;
 
     // iterate RTL; j counter for odd/even check
     for (int i = card.length() - 1, j = 1; i >= 0; i--, j++) {
 
         // Parse char to int: https://stackoverflow.com/a/439589
-        int digit = card[i] - '0';
+        unsigned int digit = card[i] - '0';
 
         // RTL, odd position (just add)
         if (j % 2) {
@@ -53,14 +53,10 @@ bool isvalidcc(string const &card) {
         }
 
         // RTL, even position (double and add)
-        int doubled = digit * 2;
-        if (doubled > 9) {
-            int a = doubled / 10, b = doubled % 10;
-            evenSum += a + b;
-        } else {
-            evenSum += doubled;
-        }
-
+        unsigned int doubled = digit * 2;
+        evenSum += doubled > 9 ?
+                   (doubled / 10) + (doubled % 10) :
+                   doubled;
     }
 
     return (oddSum + evenSum) % 10 == 0;
