@@ -17,6 +17,11 @@ struct Definition {
                this->part_of_speech < other.part_of_speech;
     }
 
+    bool operator==(Definition &other) const {
+        return this->part_of_speech == other.part_of_speech &&
+            this->definition == other.definition;
+    }
+
 };
 
 #endif //CSC340ASMT03_PART_C_DEFINITION_H_
