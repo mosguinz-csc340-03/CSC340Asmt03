@@ -1,8 +1,12 @@
-#include "Dictionary.h"
 #include <fstream>
 #include <iostream>
+#include <vector>
+
+#include "Dictionary.h"
+#include "Definition.h"
 
 const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(C:\Users\MickeyMouse\AbsolutePath\DB\Data.CS.SFSU.txt)";
+std::unordered_map<std::string, std::vector<Definition>> entries;
 
 Dictionary::Dictionary() {
     Dictionary::LoadDictionary();
@@ -11,24 +15,44 @@ Dictionary::Dictionary() {
 void Dictionary::LoadDictionary() {
     std::string file_path = DEFAULT_SOURCE_PATH;
     std::fstream fs;
-    std::string line;
 
     std::cout << "! Opening data file... " << DEFAULT_SOURCE_PATH << "\n";
 
     while (true) {
         fs.open(file_path, std::ios::in);
-        if (fs.is_open()) {
-            while (std::getline(fs, line)) {
-                std::cout << line << std::endl;
-            }
-            fs.close();
-            return;
+
+        if (!fs.is_open()) {
+            std::cout << "<!>ERROR<!> ===> File could not be opened.\n"
+                      << "<!>ERROR<!> ===> Provided file path: " << file_path << "\n"
+                      << "<!>Enter the CORRECT data file path: ";
+            std::cin >> file_path;
+            continue;
         }
 
-        std::cout << "<!>ERROR<!> ===> File could not be opened.\n";
-        std::cout << "<!>ERROR<!> ===> Provided file path: " << file_path << "\n";
-        std::cout << "<!>Enter the CORRECT data file path: ";
-        std::cin >> file_path;
+        std::string line;
+        while (std::getline(fs, line)) {
+            std::string term;
+            std::getline(fs, term, '|');
+
+            std::string rawDef;
+            std::vector<Definition> definitions;
+            while (std::getline(fs, rawDef, '|')) {
+                definitions.push_back(ParseDefinition(rawDef));
+            }
+
+            Dictionary::entries.insert(std::make_pair(term, definitions));
+        }
+
+        fs.close();
+        return;
     }
 }
 
+Definition Dictionary::ParseDefinition(const std::string &s) {
+    const std::string delim = " -=>> ";
+    int delim_pos = s.find(delim);
+    const std::string pos = s.substr(0, delim_pos);
+    const std::string definition = s.substr(delim_pos + delim.length());
+    std::cout << "POS: " << pos << ", def: " << definition << "\n";
+    return {pos, definition};
+}

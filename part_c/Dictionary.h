@@ -3,6 +3,8 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
+
 #include "Definition.h"
 
 class Dictionary {
@@ -10,13 +12,14 @@ class Dictionary {
     /** Path to the file that contains the dictionary data. */
     static const std::string DEFAULT_SOURCE_PATH;
 
-    const std::unordered_map<std::string, std::vector<Definition>> ENTRIES;
+    std::unordered_map<std::string, std::vector<Definition>> entries;
 
  public:
     Dictionary();
 
-    static void LoadDictionary();
+    void LoadDictionary();
 
+    static Definition ParseDefinition(const std::string &s);
 };
 
 #endif //CSC340ASMT03_DICTIONARY_H
