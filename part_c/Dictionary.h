@@ -5,21 +5,21 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Definition.h"
+#include "DictEntry.h"
 
 class Dictionary {
 
     /** Path to the file that contains the dictionary data. */
     static const std::string DEFAULT_SOURCE_PATH;
 
-    std::unordered_map<std::string, std::vector<Definition>> entries;
+    std::unordered_map<std::string, std::vector<DictEntry>> entries;
 
  public:
     Dictionary();
 
     void LoadDictionary();
 
-    static Definition ParseDefinition(const std::string &s);
+    static DictEntry ParseDefinition(const std::string &s);
 };
 
 #endif //CSC340ASMT03_DICTIONARY_H

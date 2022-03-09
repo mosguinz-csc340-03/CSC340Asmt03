@@ -3,10 +3,10 @@
 #include <vector>
 
 #include "Dictionary.h"
-#include "Definition.h"
+#include "DictEntry.h"
 
 const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(C:\Users\MickeyMouse\AbsolutePath\DB\Data.CS.SFSU.txt)";
-std::unordered_map<std::string, std::vector<Definition>> entries;
+std::unordered_map<std::string, std::vector<DictEntry>> entries;
 
 Dictionary::Dictionary() {
     Dictionary::LoadDictionary();
@@ -35,7 +35,7 @@ void Dictionary::LoadDictionary() {
             std::getline(fs, term, '|');
 
             std::string rawDef;
-            std::vector<Definition> definitions;
+            std::vector<DictEntry> definitions;
             while (std::getline(fs, rawDef, '|')) {
                 definitions.push_back(ParseDefinition(rawDef));
             }
@@ -48,7 +48,7 @@ void Dictionary::LoadDictionary() {
     }
 }
 
-Definition Dictionary::ParseDefinition(const std::string &s) {
+DictEntry Dictionary::ParseDefinition(const std::string &s) {
     const std::string delim = " -=>> ";
     int delim_pos = s.find(delim);
     const std::string pos = s.substr(0, delim_pos);
