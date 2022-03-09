@@ -5,8 +5,8 @@
 
 struct Definition {
 
-    std::string part_of_speech;
-    std::string definition;
+    const std::string part_of_speech;
+    const std::string definition;
 
     Definition(const std::string &part_of_speech, const std::string &definition) :
         part_of_speech(part_of_speech), definition(definition) {}
