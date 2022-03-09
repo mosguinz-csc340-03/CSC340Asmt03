@@ -19,7 +19,7 @@ class Dictionary {
 
     void LoadDictionary();
 
-    static DictEntry ParseDefinition(const std::string &s);
+    static DictEntry ParseEntry(const std::string &s);
 };
 
 #endif //CSC340ASMT03_DICTIONARY_H

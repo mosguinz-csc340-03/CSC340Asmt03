@@ -37,7 +37,7 @@ void Dictionary::LoadDictionary() {
             std::string rawDef;
             std::vector<DictEntry> definitions;
             while (std::getline(fs, rawDef, '|')) {
-                definitions.push_back(ParseDefinition(rawDef));
+                definitions.push_back(ParseEntry(rawDef));
             }
 
             Dictionary::entries.insert(std::make_pair(term, definitions));
@@ -48,7 +48,7 @@ void Dictionary::LoadDictionary() {
     }
 }
 
-DictEntry Dictionary::ParseDefinition(const std::string &s) {
+DictEntry Dictionary::ParseEntry(const std::string &s) {
     const std::string delim = " -=>> ";
     int delim_pos = s.find(delim);
     const std::string pos = s.substr(0, delim_pos);
