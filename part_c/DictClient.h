@@ -45,7 +45,7 @@ class DictClient {
         std::vector<std::string> res;
         res.reserve(entries.size());
         for (const DictEntry &entry : entries) {
-            std::string formatted;
+            std::string formatted = term;
             std::string definition = (char) toupper(entry.definition[0]) + entry.definition.substr(1);
             res.push_back(
                 formatted.append(" [").append(entry.part_of_speech).append("] : ").append(definition)
