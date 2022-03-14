@@ -9,6 +9,10 @@
 #define CSC340ASMT03_PART_C_DICTCLIENT_H_
 
 class DictClient {
+
+ private:
+    unsigned int query_count = 0;
+
  public:
     static void PrintToConsole(const std::vector<std::string> &messages) {
         std::cout << std::setw(8) << '|' << '\n';
@@ -52,6 +56,13 @@ class DictClient {
             );
         }
         PrintToConsole(res);
+    }
+
+    std::string PromptInput() {
+        std::printf("Search [%d]: ", ++query_count);
+        std::string x;
+        std::cin >> x;
+        return x;
     }
 };
 
