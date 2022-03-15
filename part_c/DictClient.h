@@ -62,7 +62,8 @@ class DictClient {
     }
 
     static void PrintParsingError(int arg_index, const std::string &arg) {
-        std::vector<std::string> query_options = QUERY_ARGS;
+        std::vector<std::string> query_options = std::vector<std::string>(std::next(QUERY_ARGS.begin(), arg_index - 1),
+                                                                          QUERY_ARGS.end());
         std::vector<std::string> messages;
         messages.reserve(query_options.size() + 2);
 
@@ -80,7 +81,9 @@ class DictClient {
         for (const std::string &option : query_options) {
             messages.emplace_back(std::string("<The entered ")
                                       .append(arg_ordinal)
-                                      .append(" parameter is NOT ")
+                                      .append(" '")
+                                      .append(arg)
+                                      .append("' parameter is NOT ")
                                       .append(option)
                                       .append(".>"));
         };
