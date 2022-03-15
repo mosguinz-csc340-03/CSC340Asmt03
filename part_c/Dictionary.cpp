@@ -82,7 +82,11 @@ std::vector<DictEntry> Dictionary::QueryDict(const std::string &query_string) {
 
         // First arg must be the search term
         if (arg_index == 0) {
-            query_res.swap(Dictionary::entries.find(arg)->second);
+            auto itr = Dictionary::entries.find(arg);
+            if (itr == Dictionary::entries.end()) {
+                return {};
+            }
+            query_res.swap(itr->second);
             std::sort(query_res.begin(), query_res.end());
             continue;
         }
@@ -124,10 +128,9 @@ std::vector<DictEntry> Dictionary::QueryDict(const std::string &query_string) {
             DictClient::PrintParsingError(arg_index, arg);
         }
 
-        if (query_res.empty()) {
-//            return NULL;
-        }
     }
 
     return query_res;
+}
+std::vector<DictEntry> Dictionary::GetEntry(const std::string &q) {
 }
