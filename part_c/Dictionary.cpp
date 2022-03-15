@@ -32,15 +32,16 @@ void Dictionary::LoadDictionary() {
         std::string line;
         while (std::getline(fs, line)) {
             std::string term;
-            std::getline(fs, term, '|');
+            std::istringstream line_stream(line);
+            std::getline(line_stream, term, '|');
 
             std::string rawDef;
             std::vector<DictEntry> definitions;
-            while (std::getline(fs, rawDef, '|')) {
+            while (std::getline(line_stream, rawDef, '|')) {
                 definitions.push_back(ParseEntry(rawDef));
             }
 
-            Dictionary::entries.insert(std::make_pair(term, definitions));
+            Dictionary::entries.emplace(term, definitions);
         }
 
         fs.close();
