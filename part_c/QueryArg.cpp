@@ -1,7 +1,7 @@
 #include "QueryArg.h"
 #include "Dictionary.h"
 
-const std::vector<QueryArg> QUERY_ARGS = {
+const std::vector<QueryArg> QueryArg::VALID_ARGS = {
     QueryArg{"part_of_speech", "a part of speech",
              {"adjective", "adverb", "conjunction", "interjection", "noun", "preposition", "pronoun", "verb"}},
     QueryArg{"distinct", "'distinct'", {"distinct"}},
