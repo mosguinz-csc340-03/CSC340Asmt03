@@ -5,19 +5,19 @@
 
 struct DictEntry {
 
-    const std::string part_of_speech;
-    const std::string definition;
+    std::string part_of_speech;
+    std::string definition;
 
     DictEntry(const std::string &part_of_speech, const std::string &definition) :
         part_of_speech(part_of_speech), definition(definition) {}
 
-    bool operator<(DictEntry &other) const {
+    bool operator<(const DictEntry &other) const {
         return this->part_of_speech == other.part_of_speech ?
                this->definition < other.definition :
                this->part_of_speech < other.part_of_speech;
     }
 
-    bool operator==(DictEntry &other) const {
+    bool operator==(const DictEntry &other) const {
         return this->part_of_speech == other.part_of_speech &&
             this->definition == other.definition;
     }
