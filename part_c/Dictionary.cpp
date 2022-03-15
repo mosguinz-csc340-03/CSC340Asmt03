@@ -37,6 +37,8 @@ void Dictionary::LoadDictionary() {
             continue;
         }
 
+        int definition_count = 0, keyword_count = 0;
+
         std::string line;
         while (std::getline(fs, line)) {
             std::string term;
@@ -45,12 +47,19 @@ void Dictionary::LoadDictionary() {
 
             std::string rawDef;
             std::vector<DictEntry> definitions;
+
             while (std::getline(line_stream, rawDef, '|')) {
                 definitions.push_back(ParseEntry(rawDef));
+                definition_count++;
             }
 
             Dictionary::entries.emplace(term, definitions);
+            keyword_count++;
         }
+
+        std::cout << "====== DICTIONARY 340 C++ =====\n"
+                  << "------ Keywords: " << keyword_count << "\n"
+                  << "------ Definitions: " << definition_count << "\n\n";
 
         fs.close();
         return;
