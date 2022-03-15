@@ -4,6 +4,7 @@
 #include <iomanip>
 
 #include "DictEntry.h"
+#include "Dictionary.h"
 
 #ifndef CSC340ASMT03_PART_C_DICTCLIENT_H_
 #define CSC340ASMT03_PART_C_DICTCLIENT_H_
@@ -110,10 +111,32 @@ class DictClient {
         PrintToConsole(messages);
     }
 
+    void StartSession() {
+        Dictionary dictionary;
+
+        while (true) {
+            const std::string input = PromptInput();
+
+            if (input == "!q") {
+                std::cout << "\n-----THANK YOU-----";
+                return;
+            }
+
+            if (input.empty() || input == "!help") {
+                PrintHelp();
+                continue;
+            }
+
+            dictionary.QueryDict(input);
+
+        }
+
+    }
+
     std::string PromptInput() {
         std::printf("Search [%d]: ", ++query_count);
         std::string x;
-        std::cin >> x;
+        std::getline(std::cin, x);
         return x;
     }
 };

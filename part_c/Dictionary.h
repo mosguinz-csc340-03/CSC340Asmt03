@@ -23,7 +23,7 @@ class Dictionary {
     void LoadDictionary();
 
     static DictEntry ParseEntry(const std::string &s);
-    std::vector<DictEntry> QueryDict(const std::string &q);
+    std::vector<DictEntry> QueryDict(std::string q);
 
  private:
     std::vector<DictEntry> GetEntry(const std::string &);

@@ -75,7 +75,8 @@ DictEntry Dictionary::ParseEntry(const std::string &s) {
     return {pos, definition};
 }
 
-std::vector<DictEntry> Dictionary::QueryDict(const std::string &query_string) {
+std::vector<DictEntry> Dictionary::QueryDict(std::string query_string) {
+    std::transform(query_string.begin(), query_string.end(), query_string.begin(), ::tolower);
     std::istringstream iss(query_string);
     std::string arg;
     std::vector<DictEntry> query_res;
@@ -85,17 +86,21 @@ std::vector<DictEntry> Dictionary::QueryDict(const std::string &query_string) {
     int arg_index = -1;
 
     bool pos_filtered = false;
+    std::string term;
     while (std::getline(iss, arg, ' ')) {
         if (arg.empty()) { continue; }
         arg_index++;
+
 
         // First arg must be the search term
         if (arg_index == 0) {
             auto itr = Dictionary::entries.find(arg);
             if (itr == Dictionary::entries.end()) {
-                return {};
+                query_res = {};
+                break;
             }
-            query_res.swap(itr->second);
+            term = itr->first;
+            query_res = std::vector<DictEntry>(itr->second);
             std::sort(query_res.begin(), query_res.end());
             continue;
         }
@@ -138,6 +143,8 @@ std::vector<DictEntry> Dictionary::QueryDict(const std::string &query_string) {
         }
 
     }
+
+    DictClient::PrintResults(term, query_res);
 
     return query_res;
 }
