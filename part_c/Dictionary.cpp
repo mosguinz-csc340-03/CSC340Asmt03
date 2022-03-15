@@ -1,11 +1,19 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <queue>
+#include <set>
 
 #include "Dictionary.h"
 #include "DictEntry.h"
+#include "DictClient.h"
 
-const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(C:\Users\MickeyMouse\AbsolutePath\DB\Data.CS.SFSU.txt)";
+//const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(C:\Users\MickeyMouse\AbsolutePath\DB\Data.CS.SFSU.txt)";
+const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(Data.CS.SFSU.txt)";
+const std::set<std::string>
+    PARTS_OF_SPEECH{"adjective", "adverb", "conjunction", "interjection", "noun", "preposition", "pronoun", "verb"};
+
 std::unordered_map<std::string, std::vector<DictEntry>> entries;
 
 Dictionary::Dictionary() {
@@ -56,4 +64,70 @@ DictEntry Dictionary::ParseEntry(const std::string &s) {
     const std::string definition = s.substr(delim_pos + delim.length());
     std::cout << "POS: " << pos << ", def: " << definition << "\n";
     return {pos, definition};
+}
+
+std::vector<DictEntry> Dictionary::QueryDict(const std::string &query_string) {
+    std::istringstream iss(query_string);
+    std::string arg;
+    std::vector<DictEntry> query_res;
+
+    std::vector<std::string> args_to_check = DictClient::QUERY_ARGS;
+
+    int arg_index = -1;
+
+    bool pos_filtered = false;
+    while (std::getline(iss, arg, ' ')) {
+        if (arg.empty()) { continue; }
+        arg_index++;
+
+        // First arg must be the search term
+        if (arg_index == 0) {
+            query_res.swap(Dictionary::entries.find(arg)->second);
+            std::sort(query_res.begin(), query_res.end());
+            continue;
+        }
+
+        bool parsing_failed = false;
+        for (std::string param : args_to_check) {
+
+            if (!pos_filtered
+                && ::PARTS_OF_SPEECH.find(arg) != ::PARTS_OF_SPEECH.end()) {
+                query_res.erase(
+                    std::remove_if(
+                        query_res.begin(),
+                        query_res.end(),
+                        [arg](const DictEntry &e) { return e.part_of_speech != arg; }),
+                    query_res.end()
+                );
+                pos_filtered = true;
+                break;
+            }
+
+            if (arg == "distinct") {
+                query_res.erase(
+                    std::unique(query_res.begin(), query_res.end()),
+                    query_res.end()
+                );
+                break;
+            }
+
+            if (arg == "reverse") {
+                std::reverse(query_res.begin(), query_res.end());
+                break;
+            }
+
+            parsing_failed = true;
+
+        }
+
+        if (parsing_failed) {
+            DictClient::PrintParsingError(arg_index, arg);
+        }
+
+        if (query_res.empty()) {
+//            return NULL;
+        }
+    }
+
+    return query_res;
 }
