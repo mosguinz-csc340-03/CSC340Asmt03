@@ -1,11 +1,11 @@
 #include "QueryArg.h"
 #include "Dictionary.h"
 
-const std::vector<QueryArg> QueryArg::VALID_ARGS = {
-    QueryArg{"part_of_speech", "a part of speech",
+const std::deque<QueryArg> QueryArg::VALID_ARGS = {
+    QueryArg{ArgType::PART_OF_SPEECH, "a part of speech",
              {"adjective", "adverb", "conjunction", "interjection", "noun", "preposition", "pronoun", "verb"}},
-    QueryArg{"distinct", "'distinct'", {"distinct"}},
-    QueryArg{"reverse", "'reverse'", {"distinct"}}
+    QueryArg{ArgType::DISTINCT, "'distinct'", {"distinct"}},
+    QueryArg{ArgType::REVERSE, "'reverse'", {"reverse"}}
 };
 
 bool QueryArg::is_valid(const std::string &s) const {
