@@ -12,8 +12,6 @@
 
 //const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(C:\Users\MickeyMouse\AbsolutePath\DB\Data.CS.SFSU.txt)";
 const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(Data.CS.SFSU.txt)";
-const std::set<std::string>
-    PARTS_OF_SPEECH{"adjective", "adverb", "conjunction", "interjection", "noun", "preposition", "pronoun", "verb"};
 
 std::unordered_map<std::string, std::vector<DictEntry>> entries;
 
@@ -81,17 +79,13 @@ std::vector<DictEntry> Dictionary::QueryDict(std::string query_string) {
     std::string arg;
     std::vector<DictEntry> query_res;
 
-//    std::vector<std::string> args_to_check = DictClient::QUERY_ARGS;
     std::deque<QueryArg> args_to_check = QueryArg::VALID_ARGS;
 
     int arg_index = -1;
-
-    bool pos_filtered = false;
     std::string term;
     while (std::getline(iss, arg, ' ')) {
         if (arg.empty()) { continue; }
         arg_index++;
-
 
         // First arg must be the search term
         if (arg_index == 0) {
@@ -140,7 +134,6 @@ std::vector<DictEntry> Dictionary::QueryDict(std::string query_string) {
                     break;
             }
             break;
-
         }
 
         if (parsing_failed) {
