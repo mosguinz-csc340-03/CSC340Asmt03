@@ -85,9 +85,9 @@ class DictClient {
         for (const std::string &option : query_options) {
             messages.emplace_back(std::string("<The entered ")
                                       .append(arg_ordinal)
-                                      .append(" '")
+                                      .append(" parameter '")
                                       .append(arg)
-                                      .append("' parameter is NOT ")
+                                      .append("' is NOT ")
                                       .append(option)
                                       .append(".>"));
         };
