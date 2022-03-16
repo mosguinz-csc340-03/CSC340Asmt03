@@ -69,7 +69,8 @@ DictEntry Dictionary::ParseEntry(const std::string &s) {
     const std::string delim = " -=>> ";
     int delim_pos = s.find(delim);
     const std::string pos = s.substr(0, delim_pos);
-    const std::string definition = s.substr(delim_pos + delim.length());
+    std::string definition = s.substr(delim_pos + delim.length());
+    definition = (char) toupper(definition[0]) + definition.substr(1);
     return {pos, definition};
 }
 

@@ -54,9 +54,8 @@ class DictClient {
         res.reserve(entries.size());
         for (const DictEntry &entry : entries) {
             std::string formatted = term;
-            std::string definition = (char) toupper(entry.definition[0]) + entry.definition.substr(1);
             res.push_back(
-                formatted.append(" [").append(entry.part_of_speech).append("] : ").append(definition)
+                formatted.append(" [").append(entry.part_of_speech).append("] : ").append(entry.definition)
             );
         }
         PrintToConsole(res);
@@ -70,13 +69,17 @@ class DictClient {
 
         std::string arg_ordinal;
         switch (arg_index) {
-            case 0: arg_ordinal = "1st";
+            case 0:
+                arg_ordinal = "1st";
                 break;
-            case 1: arg_ordinal = "2nd";
+            case 1:
+                arg_ordinal = "2nd";
                 break;
-            case 2: arg_ordinal = "3rd";
+            case 2:
+                arg_ordinal = "3rd";
                 break;
-            default: arg_ordinal = std::to_string(arg_index + 1) + "th";
+            default:
+                arg_ordinal = std::to_string(arg_index + 1) + "th";
         }
 
         for (const std::string &option : query_options) {
