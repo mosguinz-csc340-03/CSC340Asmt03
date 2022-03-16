@@ -8,6 +8,7 @@
 #include "Dictionary.h"
 #include "DictEntry.h"
 #include "DictClient.h"
+#include "QueryArg.h"
 
 //const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(C:\Users\MickeyMouse\AbsolutePath\DB\Data.CS.SFSU.txt)";
 const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(Data.CS.SFSU.txt)";
@@ -80,7 +81,8 @@ std::vector<DictEntry> Dictionary::QueryDict(std::string query_string) {
     std::string arg;
     std::vector<DictEntry> query_res;
 
-    std::vector<std::string> args_to_check = DictClient::QUERY_ARGS;
+//    std::vector<std::string> args_to_check = DictClient::QUERY_ARGS;
+    std::deque<QueryArg> args_to_check = QueryArg::VALID_ARGS;
 
     int arg_index = -1;
 
@@ -104,36 +106,40 @@ std::vector<DictEntry> Dictionary::QueryDict(std::string query_string) {
             continue;
         }
 
-        bool parsing_failed = false;
-        for (std::string param : args_to_check) {
+        bool parsing_failed = true;
+        while (!args_to_check.empty()) {
+            QueryArg query_arg = args_to_check.front();
+            args_to_check.pop_front();
 
-            if (!pos_filtered
-                && ::PARTS_OF_SPEECH.find(arg) != ::PARTS_OF_SPEECH.end()) {
-                query_res.erase(
-                    std::remove_if(
-                        query_res.begin(),
-                        query_res.end(),
-                        [arg](const DictEntry &e) { return e.part_of_speech != arg; }),
-                    query_res.end()
-                );
-                pos_filtered = true;
-                break;
+            if (!query_arg.is_valid(arg)) {
+                continue;
             }
 
-            if (arg == "distinct") {
-                query_res.erase(
-                    std::unique(query_res.begin(), query_res.end()),
-                    query_res.end()
-                );
-                break;
+            parsing_failed = false;
+            switch (query_arg.arg_type) {
+                case QueryArg::ArgType::PART_OF_SPEECH:
+                    std::cout << query_arg.display_name << std::endl;
+                    query_res.erase(
+                        std::remove_if(
+                            query_res.begin(),
+                            query_res.end(),
+                            [arg](const DictEntry &e) { return e.part_of_speech != arg; }),
+                        query_res.end()
+                    );
+                    break;
+                case QueryArg::ArgType::DISTINCT:
+                    std::cout << query_arg.display_name << std::endl;
+                    query_res.erase(
+                        std::unique(query_res.begin(), query_res.end()),
+                        query_res.end()
+                    );
+                    break;
+                case QueryArg::ArgType::REVERSE:
+                    std::cout << query_arg.display_name << std::endl;
+                    std::reverse(query_res.begin(), query_res.end());
+                    break;
             }
-
-            if (arg == "reverse") {
-                std::reverse(query_res.begin(), query_res.end());
-                break;
-            }
-
-            parsing_failed = true;
+            break;
 
         }
 
@@ -144,7 +150,6 @@ std::vector<DictEntry> Dictionary::QueryDict(std::string query_string) {
     }
 
     DictClient::PrintResults(term, query_res);
-
     return query_res;
 }
 std::vector<DictEntry> Dictionary::GetEntry(const std::string &q) {
