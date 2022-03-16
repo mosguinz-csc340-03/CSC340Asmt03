@@ -1,6 +1,5 @@
-#include <iostream>
-using namespace std;
+#include "DictClient.h"
 
 int main() {
-    cout << "Test";
+    DictClient().StartSession();
 }
