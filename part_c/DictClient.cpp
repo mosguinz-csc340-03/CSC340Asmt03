@@ -107,7 +107,7 @@ void DictClient::StartSession() {
         const std::string input = PromptInput();
 
         if (input == "!q") {
-            std::cout << "\n-----THANK YOU-----";
+            std::cout << "\n-----THANK YOU-----\n";
             return;
         }
 
