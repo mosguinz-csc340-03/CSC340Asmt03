@@ -116,7 +116,6 @@ void Dictionary::QueryDict(std::string query_string) {
             parsing_failed = false;
             switch (query_arg.arg_type) {
                 case QueryArg::ArgType::PART_OF_SPEECH:
-                    std::cout << query_arg.display_name << std::endl;
                     query_res.erase(
                         std::remove_if(
                             query_res.begin(),
@@ -126,14 +125,12 @@ void Dictionary::QueryDict(std::string query_string) {
                     );
                     break;
                 case QueryArg::ArgType::DISTINCT:
-                    std::cout << query_arg.display_name << std::endl;
                     query_res.erase(
                         std::unique(query_res.begin(), query_res.end()),
                         query_res.end()
                     );
                     break;
                 case QueryArg::ArgType::REVERSE:
-                    std::cout << query_arg.display_name << std::endl;
                     std::reverse(query_res.begin(), query_res.end());
                     break;
             }
