@@ -3,7 +3,6 @@
 #include <vector>
 #include <sstream>
 #include <queue>
-#include <set>
 
 #include "Dictionary.h"
 #include "DictEntry.h"
@@ -12,8 +11,6 @@
 
 //const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(C:\Users\MickeyMouse\AbsolutePath\DB\Data.CS.SFSU.txt)";
 const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(Data.CS.SFSU.txt)";
-
-std::unordered_map<std::string, std::vector<DictEntry>> entries;
 
 Dictionary::Dictionary() {
     Dictionary::LoadDictionary();
