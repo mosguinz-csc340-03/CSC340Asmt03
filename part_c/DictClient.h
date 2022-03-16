@@ -18,6 +18,7 @@ class DictClient {
  public:
     static void PrintToConsole(const std::vector<std::string> &messages);
     static void PrintHelp();
+    static void PrintResults();
     static void PrintResults(std::string term, const std::vector<DictEntry> &entries);
     static void PrintParsingError(int arg_index, const std::string &arg);
 

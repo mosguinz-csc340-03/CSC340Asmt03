@@ -17,10 +17,14 @@ void DictClient::PrintHelp() {
     );
 }
 
+void DictClient::PrintResults() {
+    PrintToConsole({"<NOT FOUND> To be considered for the next release. Thank you."});
+    PrintHelp();
+}
+
 void DictClient::PrintResults(std::string term, const std::vector<DictEntry> &entries) {
     if (entries.empty()) {
-        PrintToConsole({"<NOT FOUND> To be considered for the next release. Thank you."});
-        PrintHelp();
+        PrintResults();
         return;
     }
 
