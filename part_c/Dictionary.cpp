@@ -76,8 +76,6 @@ void Dictionary::QueryDict(std::string query_string) {
     std::istringstream iss(query_string);
     std::string arg;
 
-    std::deque<QueryArg> args_to_check = QueryArg::VALID_ARGS;
-
     std::deque<std::string> args;
     while (std::getline(iss, arg, ' ')) {
         if (arg.empty()) { continue; }
@@ -104,11 +102,12 @@ void Dictionary::QueryDict(std::string query_string) {
 
     for (const std::string &arg : args) {
         arg_index++;
+        std::vector<QueryArg> args_to_check = std::vector<QueryArg>(
+            std::next(QueryArg::VALID_ARGS.begin(), arg_index - 1),
+            QueryArg::VALID_ARGS.end());
 
         bool parsing_failed = true;
-        while (!args_to_check.empty()) {
-            QueryArg query_arg = args_to_check.front();
-            args_to_check.pop_front();
+        for (const QueryArg &query_arg : args_to_check) {
 
             if (!query_arg.is_valid(arg)) {
                 continue;
