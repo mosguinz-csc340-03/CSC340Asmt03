@@ -9,8 +9,8 @@
 #include "DictClient.h"
 #include "QueryArg.h"
 
-//const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(C:\Users\MickeyMouse\AbsolutePath\DB\Data.CS.SFSU.txt)";
-const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(Data.CS.SFSU.txt)";
+const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(C:\Users\MickeyMouse\AbsolutePath\DB\Data.CS.SFSU.txt)";
+//const std::string Dictionary::DEFAULT_SOURCE_PATH = R"(Data.CS.SFSU.txt)";
 
 Dictionary::Dictionary() {
     Dictionary::LoadDictionary();
@@ -29,7 +29,7 @@ void Dictionary::LoadDictionary() {
             std::cout << "<!>ERROR<!> ===> File could not be opened.\n"
                       << "<!>ERROR<!> ===> Provided file path: " << file_path << "\n"
                       << "<!>Enter the CORRECT data file path: ";
-            std::cin >> file_path;
+            std::getline(std::cin, file_path);
             continue;
         }
 
@@ -53,7 +53,7 @@ void Dictionary::LoadDictionary() {
             keyword_count++;
         }
 
-        std::cout << "====== DICTIONARY 340 C++ =====\n"
+        std::cout << "\n====== DICTIONARY 340 C++ =====\n"
                   << "------ Keywords: " << keyword_count << "\n"
                   << "------ Definitions: " << definition_count << "\n\n";
 
