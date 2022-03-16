@@ -5,6 +5,7 @@
 
 #include "DictEntry.h"
 #include "Dictionary.h"
+#include "QueryArg.h"
 
 #ifndef CSC340ASMT03_PART_C_DICTCLIENT_H_
 #define CSC340ASMT03_PART_C_DICTCLIENT_H_
@@ -15,8 +16,6 @@ class DictClient {
     unsigned int query_count = 0;
 
  public:
-
-    static const std::vector<std::string> QUERY_ARGS;
 
     static void PrintToConsole(const std::vector<std::string> &messages) {
         std::cout << std::setw(8) << '|' << '\n';
@@ -62,8 +61,8 @@ class DictClient {
     }
 
     static void PrintParsingError(int arg_index, const std::string &arg) {
-        std::vector<std::string> query_options = std::vector<std::string>(std::next(QUERY_ARGS.begin(), arg_index - 1),
-                                                                          QUERY_ARGS.end());
+        std::vector<QueryArg> query_options = std::vector<QueryArg>(
+            std::next(QueryArg::VALID_ARGS.begin(), arg_index - 1), QueryArg::VALID_ARGS.end());
         std::vector<std::string> messages;
         messages.reserve(query_options.size() + 2);
 
@@ -82,13 +81,13 @@ class DictClient {
                 arg_ordinal = std::to_string(arg_index + 1) + "th";
         }
 
-        for (const std::string &option : query_options) {
+        for (const QueryArg &option : query_options) {
             messages.emplace_back(std::string("<The entered ")
                                       .append(arg_ordinal)
                                       .append(" parameter '")
                                       .append(arg)
                                       .append("' is NOT ")
-                                      .append(option)
+                                      .append(option.display_name)
                                       .append(".>"));
         };
 
@@ -99,11 +98,11 @@ class DictClient {
                                   .append("' was disregarded.>"));
 
         std::string arg_list;
-        for (const std::string &option : query_options) {
+        for (const QueryArg &option : query_options) {
             if (!arg_list.empty()) {
                 arg_list.append(" or ");
             }
-            arg_list.append(option);
+            arg_list.append(option.display_name);
         }
         messages.emplace_back(std::string("<The ")
                                   .append(arg_ordinal)
