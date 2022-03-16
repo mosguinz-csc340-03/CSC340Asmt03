@@ -12,17 +12,13 @@ class Dictionary {
 
     /** Path to the file that contains the dictionary data. */
     static const std::string DEFAULT_SOURCE_PATH;
-
-    static const std::set<std::string> PARTS_OF_SPEECH;
-
     std::unordered_map<std::string, std::vector<DictEntry>> entries;
 
  public:
     Dictionary();
 
-    void LoadDictionary();
-
     static DictEntry ParseEntry(const std::string &s);
+    void LoadDictionary();
     void QueryDict(std::string q);
 };
 
