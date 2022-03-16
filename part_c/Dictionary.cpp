@@ -74,32 +74,39 @@ DictEntry Dictionary::ParseEntry(const std::string &s) {
     return {pos, definition};
 }
 
-std::vector<DictEntry> Dictionary::QueryDict(std::string query_string) {
+void Dictionary::QueryDict(std::string query_string) {
     std::transform(query_string.begin(), query_string.end(), query_string.begin(), ::tolower);
     std::istringstream iss(query_string);
     std::string arg;
-    std::vector<DictEntry> query_res;
 
     std::deque<QueryArg> args_to_check = QueryArg::VALID_ARGS;
 
-    int arg_index = -1;
-    std::string term;
+    std::deque<std::string> args;
     while (std::getline(iss, arg, ' ')) {
         if (arg.empty()) { continue; }
-        arg_index++;
+        args.push_back(arg);
+    }
 
-        // First arg must be the search term
-        if (arg_index == 0) {
-            auto itr = Dictionary::entries.find(arg);
-            if (itr == Dictionary::entries.end()) {
-                query_res = {};
-                break;
-            }
-            term = itr->first;
-            query_res = std::vector<DictEntry>(itr->second);
-            std::sort(query_res.begin(), query_res.end());
-            continue;
-        }
+    if (args.size() > 4) {
+        DictClient::PrintHelp();
+        return;
+    }
+
+    std::string search_term = args.front();
+    args.pop_front();
+
+    auto itr = Dictionary::entries.find(search_term);
+    if (itr == Dictionary::entries.end()) {
+        DictClient::PrintResults();
+        return;
+    }
+
+    std::vector<DictEntry> query_res = std::vector<DictEntry>(itr->second);
+    std::sort(query_res.begin(), query_res.end());
+    unsigned int arg_index = 0;
+
+    for (const std::string &arg : args) {
+        arg_index++;
 
         bool parsing_failed = true;
         while (!args_to_check.empty()) {
@@ -143,8 +150,5 @@ std::vector<DictEntry> Dictionary::QueryDict(std::string query_string) {
 
     }
 
-    DictClient::PrintResults(term, query_res);
-    return query_res;
-}
-std::vector<DictEntry> Dictionary::GetEntry(const std::string &q) {
+    DictClient::PrintResults(search_term, query_res);
 }

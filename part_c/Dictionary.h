@@ -23,10 +23,7 @@ class Dictionary {
     void LoadDictionary();
 
     static DictEntry ParseEntry(const std::string &s);
-    std::vector<DictEntry> QueryDict(std::string q);
-
- private:
-    std::vector<DictEntry> GetEntry(const std::string &);
+    void QueryDict(std::string q);
 };
 
 #endif //CSC340ASMT03_DICTIONARY_H
