@@ -72,7 +72,7 @@ void DictClient::PrintParsingError(int arg_index, const std::string &arg) {
                                   .append("' is NOT ")
                                   .append(option.display_name)
                                   .append(".>"));
-    };
+    }
 
     messages.emplace_back(std::string("<The entered ")
                               .append(arg_ordinal)
@@ -122,5 +122,6 @@ std::string DictClient::PromptInput() {
     std::printf("Search [%d]: ", ++query_count);
     std::string x;
     std::getline(std::cin, x);
+    std::transform(x.begin(), x.end(), x.begin(), ::tolower);
     return x;
 }
