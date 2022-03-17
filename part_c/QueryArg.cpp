@@ -1,5 +1,4 @@
 #include "QueryArg.h"
-#include "Dictionary.h"
 
 const std::deque<QueryArg> QueryArg::VALID_ARGS = {
     QueryArg{ArgType::PART_OF_SPEECH, "a part of speech",
