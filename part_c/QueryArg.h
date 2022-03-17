@@ -12,7 +12,7 @@ struct QueryArg {
     std::string display_name;
     std::set<std::string> valid_tokens;
 
-    bool is_valid(const std::string &s) const;
+    bool IsValid(const std::string &s) const;
     static const std::deque<QueryArg> VALID_ARGS;
 };
 

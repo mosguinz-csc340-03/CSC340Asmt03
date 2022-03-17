@@ -112,7 +112,7 @@ void Dictionary::QueryDict(std::string query_string) {
         bool parsing_failed = true;
         for (const QueryArg &query_arg : args_to_check) {
 
-            if (!query_arg.is_valid(arg)) {
+            if (!query_arg.IsValid(arg)) {
                 continue;
             }
 

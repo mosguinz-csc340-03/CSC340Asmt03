@@ -8,6 +8,6 @@ const std::deque<QueryArg> QueryArg::VALID_ARGS = {
     QueryArg{ArgType::REVERSE, "'reverse'", {"reverse"}}
 };
 
-bool QueryArg::is_valid(const std::string &s) const {
+bool QueryArg::IsValid(const std::string &s) const {
     return this->valid_tokens.contains(s);
 }
