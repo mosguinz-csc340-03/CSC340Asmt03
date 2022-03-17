@@ -33,6 +33,7 @@ void Dictionary::LoadDictionary() {
             continue;
         }
 
+        std::cout << "! Loading data...\n";
         int definition_count = 0, keyword_count = 0;
 
         std::string line;
@@ -53,9 +54,11 @@ void Dictionary::LoadDictionary() {
             keyword_count++;
         }
 
-        std::cout << "\n====== DICTIONARY 340 C++ =====\n"
-                  << "------ Keywords: " << keyword_count << "\n"
-                  << "------ Definitions: " << definition_count << "\n\n";
+        std::cout << "! Loading completed...\n"
+                  << "! Closing data file... " << file_path
+                  << "\n\n====== DICTIONARY 340 C++ =====\n"
+                  << "\n------ Keywords: " << keyword_count
+                  << "\n------ Definitions: " << definition_count << "\n\n";
 
         fs.close();
         return;
