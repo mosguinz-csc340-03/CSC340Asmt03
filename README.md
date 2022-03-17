@@ -7,21 +7,13 @@
 
 ## Building
 
-This project uses CMake. There are three parts to this project, each of them with their own `main` functions, and
-therefore, their own executables.
+Build the project using CMake. There are four CMakeLists.txt. One at the root of the project (where this README is), and
+one for each part.
 
-There are four CMakeLists.txt files in total. One for each part, and one at the root folder (where this README.md is
-located).
-
-At the root folder, run:
+At the project root, run:
 
 ```shell
 cmake .
-```
-
-Then, build using:
-
-```shell
 cmake --build .
 ```
 
@@ -59,5 +51,3 @@ You may also run part C from the root folder directly, like parts A and B. Howev
 source at the beginning of the program, the path must be relative to the current working directory.
 
 In other words, entering `./Data.CS.SFSU.txt` will not work as expected if the executable is not run at its location.
-
-
