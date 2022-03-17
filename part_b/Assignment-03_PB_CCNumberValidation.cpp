@@ -6,7 +6,6 @@ using namespace std;
 
 bool isvalidcc(const string &);
 
-
 //@formatter:off
 int main()
 {
@@ -38,27 +37,16 @@ int main()
 //@formatter:on
 
 bool isvalidcc(string const &card) {
-    unsigned int oddSum = 0, evenSum = 0;
+    unsigned int odd_sum = 0, even_sum = 0;
 
-    // iterate RTL; j counter for odd/even check
     for (int i = card.length() - 1, j = 1; i >= 0; i--, j++) {
-
-        // Parse char to int: https://stackoverflow.com/a/439589
         unsigned int digit = card[i] - '0';
-
-        // RTL, odd position (just add)
         if (j % 2) {
-            oddSum += digit;
+            odd_sum += digit;
             continue;
         }
-
-        // RTL, even position (double and add)
         unsigned int doubled = digit * 2;
-        evenSum += doubled > 9 ?
-                   (doubled / 10) + (doubled % 10) :
-                   doubled;
+        even_sum += doubled > 9 ? (doubled / 10) + (doubled % 10) : doubled;
     }
-
-    return (oddSum + evenSum) % 10 == 0;
+    return (odd_sum + even_sum) % 10 == 0;
 }
-
