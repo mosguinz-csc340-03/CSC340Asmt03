@@ -95,7 +95,7 @@ void Dictionary::QueryDict(std::string query_string) {
 
     auto itr = Dictionary::entries.find(search_term);
     if (itr == Dictionary::entries.end()) {
-        DictClient::PrintResults();
+        DictClient::PrintNotFound();
         return;
     }
 
